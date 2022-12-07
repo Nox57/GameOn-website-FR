@@ -12,6 +12,7 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeBtn = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
+const submitForm = document.querySelector("#modal-form");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -29,3 +30,13 @@ function closeModal() {
 
 // close modal event
 closeBtn.addEventListener("click", closeModal);
+
+
+// submit listener 
+submitForm.addEventListener("submit", validate);
+
+// form validation
+function validate(e) {
+    e.preventDefault();
+    console.log("Submit button clicked");
+}
