@@ -40,3 +40,34 @@ function validate(e) {
     e.preventDefault();
     console.log("Submit button clicked");
 }
+
+// verif inputs
+const inputFirst = document.getElementById("first");
+const inputLast = document.getElementById("last");
+inputFirst.addEventListener("change", checkInput);
+inputLast.addEventListener("change", checkInput);
+
+// function to check if input is valid
+function checkInput() {
+    console.log(this.value);
+    // We check if the value is equal or greater than 2 characters & if the value is not null
+    if (this.value.length >= 2 && this.value !== null) {
+        // We check with regex if there is numbers [0-9] in the value
+        if (/\d/.test(this.value)) {
+            this.classList.add("input_error");
+            document.getElementById("infos-"+this.id).textContent = "Le champ du prénom ne doit pas contenir de chiffre.";
+            document.getElementById("infos-"+this.id).classList.add("error_msg");
+        }
+        else {
+            document.getElementById("infos-"+this.id).textContent = "";
+            this.classList.add("input_validated");
+            this.classList.remove("input_error");
+        }
+    }
+    else {
+        this.classList.add("input_error");
+        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+        document.getElementById("infos-"+this.id).classList.add("error_msg");
+    } 
+}
+

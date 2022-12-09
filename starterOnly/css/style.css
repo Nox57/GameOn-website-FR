@@ -532,3 +532,17 @@ footer {
   }
 }
 
+/* Modal */
+
+.error_msg {
+  color: #fe142f;
+  font-size: 12px;
+}
+
+.input_validated {
+  border: 3px solid #279e7a;
+}
+
+.input_error {
+  border: 3px solid #fe142f;
+}
