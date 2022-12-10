@@ -44,8 +44,14 @@ function validate(e) {
 // verif inputs
 const inputFirst = document.getElementById("first");
 const inputLast = document.getElementById("last");
+const inputCheckboxTerms = document.getElementById("checkbox1");
+const inputCheckboxNextEvents = document.getElementById("checkbox2");
 inputFirst.addEventListener("change", checkInput);
 inputLast.addEventListener("change", checkInput);
+inputCheckboxTerms.addEventListener("change", checkedCheckbox);
+inputCheckboxNextEvents.addEventListener("change", checkedCheckbox);
+
+
 
 // function to check if input is valid
 function checkInput() {
@@ -69,5 +75,15 @@ function checkInput() {
         document.getElementById("infos-"+this.id).textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
         document.getElementById("infos-"+this.id).classList.add("error_msg");
     } 
+}
+
+// verification des checkbox 
+function checkedCheckbox() {
+    if(this.checked == true) {
+        console.log("checked")
+    }
+    else {
+        console.log("pas checked")
+    }
 }
 
