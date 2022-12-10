@@ -44,10 +44,12 @@ function validate(e) {
 // verif inputs
 const inputFirst = document.getElementById("first");
 const inputLast = document.getElementById("last");
+const inputEmail = document.getElementById("email");
 const inputCheckboxTerms = document.getElementById("checkbox1");
 const inputCheckboxNextEvents = document.getElementById("checkbox2");
 inputFirst.addEventListener("change", checkInput);
 inputLast.addEventListener("change", checkInput);
+inputEmail.addEventListener("change", checkEmail);
 inputCheckboxTerms.addEventListener("change", checkedCheckbox);
 inputCheckboxNextEvents.addEventListener("change", checkedCheckbox);
 
@@ -75,6 +77,20 @@ function checkInput() {
         document.getElementById("infos-"+this.id).textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
         document.getElementById("infos-"+this.id).classList.add("error_msg");
     } 
+}
+
+//verification de l'email
+function checkEmail() {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
+        document.getElementById("infos-"+this.id).textContent = "";
+        this.classList.add("input_validated");
+        this.classList.remove("input_error");
+    }
+    else {
+        this.classList.add("input_error");
+        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer une adresse email correcte.";
+        document.getElementById("infos-"+this.id).classList.add("error_msg");
+    }
 }
 
 // verification des checkbox 
