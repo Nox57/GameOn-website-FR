@@ -85,10 +85,10 @@ function checkEmail() {
 // verification des checkbox 
 function checkedCheckbox() {
     if (this.checked == true) {
-        console.log("checked")
+        errorManagement(this.id, this.classList);
     }
     else {
-        console.log("pas checked")
+        errorManagement(this.id, this.classList, false);
     }
 }
 
