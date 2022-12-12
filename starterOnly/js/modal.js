@@ -49,12 +49,12 @@ const inputBirthDate = document.getElementById("birthdate").addEventListener("ch
 const inputQuantity = document.getElementById("quantity").addEventListener("change", checkNumberTournamentPlayed);
 const inputCheckboxTerms = document.getElementById("checkbox1").addEventListener("change", checkedCheckbox);
 
-// function to check if input is valid
+// Checking if input firstname and lastname is valid
 function checkInput() {
-    console.log(this.value);
+    let value = this.value;
     // We check if the value is equal or greater than 2 characters & if the value is not null
     // and we check with regex if there is no numbers [0-9] in the value
-    if (this.value.length >= 2 && this.value !== null && !(/\d/.test(this.value))) {
+    if (value.length >= 2 && value !== null && !(/\d/.test(value))) {
         errorManagement(this.id, this.classList);
     }
     else {
@@ -62,9 +62,10 @@ function checkInput() {
     } 
 }
 
-//verification de l'email
+// Checking Email
 function checkEmail() {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
+    email = this.value;
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         errorManagement(this.id, this.classList);
     }
     else {
@@ -72,7 +73,7 @@ function checkEmail() {
     }
 }
 
-// verification des checkbox 
+// Checkbox verification
 function checkedCheckbox() {
     if (this.checked == true) {
         errorManagement(this.id, this.classList);
@@ -83,7 +84,7 @@ function checkedCheckbox() {
 }
 
 function checkBirthDate() {
-    // On transforme la date en timestamp
+    // We transform date in timestamp
     let timestamp = Date.parse(this.value);
     // -2208988800000 = 1 janv 1900
     if (timestamp != NaN && timestamp > -2208988800000 && timestamp < Date.now()) {
@@ -104,7 +105,7 @@ function checkNumberTournamentPlayed() {
     }
 }
 
-// gestion des messages d'erreur 
+// Handling error messages 
 function errorManagement(id, classlist, isValid = true) {
     console.log("id = "+id+" / classlist = "+classlist+" / "+isValid)
 
