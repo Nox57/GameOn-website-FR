@@ -63,37 +63,22 @@ inputCheckboxNextEvents.addEventListener("change", checkedCheckbox);
 function checkInput() {
     console.log(this.value);
     // We check if the value is equal or greater than 2 characters & if the value is not null
-    if (this.value.length >= 2 && this.value !== null) {
-        // We check with regex if there is numbers [0-9] in the value
-        if (/\d/.test(this.value)) {
-            this.classList.add("input_error");
-            document.getElementById("infos-"+this.id).textContent = "Le champ du prénom ne doit pas contenir de chiffre.";
-            document.getElementById("infos-"+this.id).classList.add("error_msg");
-        }
-        else {
-            document.getElementById("infos-"+this.id).textContent = "";
-            this.classList.add("input_validated");
-            this.classList.remove("input_error");
-        }
+    // and we check with regex if there is no numbers [0-9] in the value
+    if (this.value.length >= 2 && this.value !== null && !(/\d/.test(this.value))) {
+        errorManagement(this.id, this.classList);
     }
     else {
-        this.classList.add("input_error");
-        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
-        document.getElementById("infos-"+this.id).classList.add("error_msg");
+        errorManagement(this.id, this.classList, false);
     } 
 }
 
 //verification de l'email
 function checkEmail() {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
-        document.getElementById("infos-"+this.id).textContent = "";
-        this.classList.add("input_validated");
-        this.classList.remove("input_error");
+        errorManagement(this.id, this.classList);
     }
     else {
-        this.classList.add("input_error");
-        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer une adresse email correcte.";
-        document.getElementById("infos-"+this.id).classList.add("error_msg");
+        errorManagement(this.id, this.classList, false);
     }
 }
 
@@ -108,41 +93,50 @@ function checkedCheckbox() {
 }
 
 function checkBirthDate() {
-    console.log(this.value);
     // On transforme la date en timestamp
     let timestamp = Date.parse(this.value);
-    console.log(timestamp)
-    if (timestamp == NaN) {
-        this.classList.add("input_error");
-        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer une date de naissance valide.";
-        document.getElementById("infos-"+this.id).classList.add("error_msg");
+    // -2208988800000 = 1 janv 1900
+    if (timestamp != NaN && timestamp > -2208988800000 && timestamp < Date.now()) {
+        errorManagement(this.id, this.classList);
     }
     else {
-        // -2208988800000 = 1 janv 1900
-        if (timestamp < -2208988800000) {
-            this.classList.add("input_error");
-            document.getElementById("infos-"+this.id).textContent = "Veuillez entrer une date de naissance valide.";
-            document.getElementById("infos-"+this.id).classList.add("error_msg");
-        }
-        else {
-            document.getElementById("infos-"+this.id).textContent = "";
-            this.classList.add("input_validated");
-            this.classList.remove("input_error");
-        }
+        errorManagement(this.id, this.classList, false);
     }
 }
 
 function checkNumberTournamentPlayed() {
     let number = Number(this.value)
     if (Number.isInteger(number) && number >= 0 && number <= 100) {
-        document.getElementById("infos-"+this.id).textContent = "";
-        this.classList.add("input_validated");
-        this.classList.remove("input_error"); 
+        errorManagement(this.id, this.classList);
     }
     else {
-        this.classList.add("input_error");
-        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer un nombre valide entre 0 et 100.";
-        document.getElementById("infos-"+this.id).classList.add("error_msg"); 
+        errorManagement(this.id, this.classList, false);
+    }
+}
+
+// gestion des messages d'erreur 
+function errorManagement(id, classlist, isValid = true) {
+    console.log("id = "+id+" / classlist = "+classlist+" / "+isValid)
+
+    let listInputsError = {
+        "first" : "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
+        "last" : "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+        "email" : "Veuillez entrer une adresse email valide.",
+        "birthdate" : "Veuillez entrer une date de naissance valide.",
+        "quantity" : "Veuillez entrer un nombre valide entre 0 et 100.",
+        "checkbox1" : "Vous devez accepter les conditions d'utilisation."
+    }
+    
+    if (isValid) {
+        document.getElementById("infos-"+id).textContent = "";
+        classlist.add("input_validated");
+        classlist.remove("input_error"); 
+    }
+    else {
+        console.log(listInputsError)
+        classlist.add("input_error");
+        document.getElementById("infos-"+id).classList.add("error_msg");
+        document.getElementById("infos-"+id).textContent = listInputsError[id]
     }
 }
 
