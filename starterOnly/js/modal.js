@@ -46,12 +46,14 @@ const inputFirst = document.getElementById("first");
 const inputLast = document.getElementById("last");
 const inputEmail = document.getElementById("email");
 const inputBirthDate = document.getElementById("birthdate");
+const inputQuantity = document.getElementById("quantity");
 const inputCheckboxTerms = document.getElementById("checkbox1");
 const inputCheckboxNextEvents = document.getElementById("checkbox2");
 inputFirst.addEventListener("change", checkInput);
 inputLast.addEventListener("change", checkInput);
 inputEmail.addEventListener("change", checkEmail);
 inputBirthDate.addEventListener("change", checkBirthDate);
+inputQuantity.addEventListener("change", checkNumberTournamentPlayed);
 inputCheckboxTerms.addEventListener("change", checkedCheckbox);
 inputCheckboxNextEvents.addEventListener("change", checkedCheckbox);
 
@@ -127,6 +129,22 @@ function checkBirthDate() {
             this.classList.add("input_validated");
             this.classList.remove("input_error");
         }
+    }
+}
+
+function checkNumberTournamentPlayed() {
+    //parseInt en base décimal (10)
+    let parsed = parseInt(this.value, 10)
+    if (parsed >= 0 && parsed <= 100) {
+        document.getElementById("infos-"+this.id).textContent = "";
+        this.classList.add("input_validated");
+        this.classList.remove("input_error"); 
+    }
+    else {
+        console.log(typeof this.value)
+        this.classList.add("input_error");
+        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer un nombre valide entre 0 et 100.";
+        document.getElementById("infos-"+this.id).classList.add("error_msg"); 
     }
 }
 
