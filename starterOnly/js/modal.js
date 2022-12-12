@@ -45,11 +45,13 @@ function validate(e) {
 const inputFirst = document.getElementById("first");
 const inputLast = document.getElementById("last");
 const inputEmail = document.getElementById("email");
+const inputBirthDate = document.getElementById("birthdate");
 const inputCheckboxTerms = document.getElementById("checkbox1");
 const inputCheckboxNextEvents = document.getElementById("checkbox2");
 inputFirst.addEventListener("change", checkInput);
 inputLast.addEventListener("change", checkInput);
 inputEmail.addEventListener("change", checkEmail);
+inputBirthDate.addEventListener("change", checkBirthDate);
 inputCheckboxTerms.addEventListener("change", checkedCheckbox);
 inputCheckboxNextEvents.addEventListener("change", checkedCheckbox);
 
@@ -95,11 +97,36 @@ function checkEmail() {
 
 // verification des checkbox 
 function checkedCheckbox() {
-    if(this.checked == true) {
+    if (this.checked == true) {
         console.log("checked")
     }
     else {
         console.log("pas checked")
+    }
+}
+
+function checkBirthDate() {
+    console.log(this.value);
+    // On transforme la date en timestamp
+    let timestamp = Date.parse(this.value);
+    console.log(timestamp)
+    if (timestamp == NaN) {
+        this.classList.add("input_error");
+        document.getElementById("infos-"+this.id).textContent = "Veuillez entrer une date de naissance valide.";
+        document.getElementById("infos-"+this.id).classList.add("error_msg");
+    }
+    else {
+        // -2208988800000 = 1 janv 1900
+        if (timestamp < -2208988800000) {
+            this.classList.add("input_error");
+            document.getElementById("infos-"+this.id).textContent = "Veuillez entrer une date de naissance valide.";
+            document.getElementById("infos-"+this.id).classList.add("error_msg");
+        }
+        else {
+            document.getElementById("infos-"+this.id).textContent = "";
+            this.classList.add("input_validated");
+            this.classList.remove("input_error");
+        }
     }
 }
 
