@@ -42,22 +42,12 @@ function validate(e) {
 }
 
 // verif inputs
-const inputFirst = document.getElementById("first");
-const inputLast = document.getElementById("last");
-const inputEmail = document.getElementById("email");
-const inputBirthDate = document.getElementById("birthdate");
-const inputQuantity = document.getElementById("quantity");
-const inputCheckboxTerms = document.getElementById("checkbox1");
-const inputCheckboxNextEvents = document.getElementById("checkbox2");
-inputFirst.addEventListener("change", checkInput);
-inputLast.addEventListener("change", checkInput);
-inputEmail.addEventListener("change", checkEmail);
-inputBirthDate.addEventListener("change", checkBirthDate);
-inputQuantity.addEventListener("change", checkNumberTournamentPlayed);
-inputCheckboxTerms.addEventListener("change", checkedCheckbox);
-inputCheckboxNextEvents.addEventListener("change", checkedCheckbox);
-
-
+const inputFirst = document.getElementById("first").addEventListener("change", checkInput);;
+const inputLast = document.getElementById("last").addEventListener("change", checkInput);
+const inputEmail = document.getElementById("email").addEventListener("change", checkEmail);
+const inputBirthDate = document.getElementById("birthdate").addEventListener("change", checkBirthDate);
+const inputQuantity = document.getElementById("quantity").addEventListener("change", checkNumberTournamentPlayed);
+const inputCheckboxTerms = document.getElementById("checkbox1").addEventListener("change", checkedCheckbox);
 
 // function to check if input is valid
 function checkInput() {
