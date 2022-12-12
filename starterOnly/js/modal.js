@@ -133,15 +133,13 @@ function checkBirthDate() {
 }
 
 function checkNumberTournamentPlayed() {
-    //parseInt en base décimal (10)
-    let parsed = parseInt(this.value, 10)
-    if (parsed >= 0 && parsed <= 100) {
+    let number = Number(this.value)
+    if (Number.isInteger(number) && number >= 0 && number <= 100) {
         document.getElementById("infos-"+this.id).textContent = "";
         this.classList.add("input_validated");
         this.classList.remove("input_error"); 
     }
     else {
-        console.log(typeof this.value)
         this.classList.add("input_error");
         document.getElementById("infos-"+this.id).textContent = "Veuillez entrer un nombre valide entre 0 et 100.";
         document.getElementById("infos-"+this.id).classList.add("error_msg"); 
