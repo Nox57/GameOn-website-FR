@@ -48,7 +48,7 @@ submitForm.addEventListener("submit", validate);
 // form validation
 function validate(form) {
     form.preventDefault();
-    if (checkName.call(inputFirst) && checkName.call(inputLast) && checkEmail.call(inputEmail) && checkBirthDate.call(inputBirthDate) && checkNumberTournamentPlayed.call(inputQuantity) && checkedCheckbox.call(inputCheckboxTerms) && checkRadio()) {
+    if (checkName.call(inputFirst) && checkName.call(inputLast) && checkEmail.call(inputEmail) && checkBirthDate.call(inputBirthDate) && checkNumberTournamentPlayed.call(inputQuantity) && checkRadio() && checkedCheckbox.call(inputCheckboxTerms)) {
         let formValidated = document.querySelector(".modal-body");
         formValidated.innerHTML = "<p>Merci pour votre inscription.</p>"
     }
@@ -56,16 +56,13 @@ function validate(form) {
 
 // we check if input firstname and lastname is valid
 function checkName() {
-    console.log(this);
     // We check if it's firstname or lastname input
     let name = this.id === "first" ? "prénom" : "nom";
     // We check if the value is equal or greater than 2 characters & if the value is not null
     if (this.value.length >= 2 && this.value != null) {
         // We check with regex if there is no numbers [0-9] in the value
         if (!(/\d/.test(this.value))) {
-            document.getElementById("infos-"+this.id).textContent = "";
-            this.classList.add("input_validated");
-            this.classList.remove("input_error");
+            display_valid(this);
             return true;
         }
         else {
@@ -82,9 +79,7 @@ function checkName() {
 // We check if email is valid
 function checkEmail() {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
-        document.getElementById("infos-"+this.id).textContent = "";
-        this.classList.add("input_validated");
-        this.classList.remove("input_error");
+        display_valid(this);
         return true;
     }
     else {
@@ -96,9 +91,7 @@ function checkEmail() {
 // We check if terms of use are valid
 function checkedCheckbox() {
     if (this.checked === true) {
-        document.getElementById("infos-"+this.id).textContent = "";
-        this.classList.add("input_validated");
-        this.classList.remove("input_error");
+        display_valid(this);
         return true;
     }
     else {
@@ -113,9 +106,7 @@ function checkBirthDate() {
     let timestamp = Date.parse(this.value);
     // -2208988800000 = 1 janv 1900
     if (timestamp != NaN && timestamp > -2208988800000 && timestamp < Date.now()) {
-        document.getElementById("infos-"+this.id).textContent = "";
-        this.classList.add("input_validated");
-        this.classList.remove("input_error");
+        display_valid(this);
         return true;
     }
     else {
@@ -128,9 +119,7 @@ function checkBirthDate() {
 function checkNumberTournamentPlayed() {
     let number = Number(this.value)
     if (Number.isInteger(number) && number >= 0 && number <= 99) {
-        document.getElementById("infos-"+this.id).textContent = "";
-        this.classList.add("input_validated");
-        this.classList.remove("input_error");
+        display_valid(this);
         return true;
     }
     else {
@@ -165,12 +154,16 @@ function checkRadio() {
 
 // Displaying error messages
 function display_error(element, errorMessage) {
-    //console.log("id = "+element.id+" / classlist = "+element.classList)
-    
     element.classList.add("input_error");
     document.getElementById("infos-"+element.id).style.display = "block";
     document.getElementById("infos-"+element.id).classList.add("error_msg");
     document.getElementById("infos-"+element.id).textContent = errorMessage;
-
 }
 
+// Displaying valid inputs
+function display_valid(element) {
+    document.getElementById("infos-"+element.id).textContent = "";
+    document.getElementById("infos-"+element.id).style.display = "none";
+    element.classList.add("input_validated");
+    element.classList.remove("input_error");
+}
