@@ -20,21 +20,21 @@ const inputQuantity = document.getElementById("quantity");
 const inputCheckboxTerms = document.getElementById("checkbox1");
 const submitForm = document.querySelector("#modal-form");
 
-// launch modal event & close modal event
+// Launch modal event & close modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 closeBtn.addEventListener("click", closeModal);
 
-// launch modal form
+// Launch modal form
 function launchModal() {
     modalBg.style.display = "block";
 }
 
-// close modal form
+// Close modal form
 function closeModal() {
     modalBg.style.display = "none";
 }
 
-// inputs listener
+// Inputs form events
 inputFirst.addEventListener("change", checkName);
 inputLast.addEventListener("change", checkName);
 inputEmail.addEventListener("change", checkEmail);
@@ -42,11 +42,12 @@ inputBirthDate.addEventListener("change", checkBirthDate);
 inputQuantity.addEventListener("change", checkNumberTournamentPlayed);
 inputCheckboxTerms.addEventListener("change", checkedCheckbox);
 
-// submit listener 
+// Submit button event
 submitForm.addEventListener("submit", validate);
 
-// form validation
+// Form validation
 function validate(form) {
+    // We cancel form submission
     form.preventDefault();
     if (checkName.call(inputFirst) && checkName.call(inputLast) && checkEmail.call(inputEmail) && checkBirthDate.call(inputBirthDate) && checkNumberTournamentPlayed.call(inputQuantity) && checkRadio() && checkedCheckbox.call(inputCheckboxTerms)) {
         let formValidated = document.querySelector(".modal-body");
@@ -54,7 +55,7 @@ function validate(form) {
     }
 }
 
-// we check if input firstname and lastname is valid
+// We check if input firstname and lastname are valids
 function checkName() {
     // We check if it's firstname or lastname input
     let name = this.id === "first" ? "prénom" : "nom";
@@ -88,7 +89,7 @@ function checkEmail() {
     }
 }
 
-// We check if terms of use are valid
+// We check if terms of use are valids
 function checkedCheckbox() {
     if (this.checked === true) {
         display_valid(this);
@@ -132,6 +133,7 @@ function checkNumberTournamentPlayed() {
 function checkRadio() {
     let checked = false;
     let errorlocation = document.getElementById("infos-location");
+    // We have 6 radio buttons so we iterate through these buttons
     for (let i = 1; i < 7; i++) {
         if (document.getElementById('location'+i).checked) {
             checked = true;
