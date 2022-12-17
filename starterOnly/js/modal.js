@@ -8,126 +8,169 @@ function editNav() {
 }
 
 // DOM Elements
-const modalbg = document.querySelector(".bground");
+const modalBg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeBtn = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
+const inputFirst = document.getElementById("first");
+const inputLast = document.getElementById("last");
+const inputEmail = document.getElementById("email");
+const inputBirthDate = document.getElementById("birthdate");
+const inputQuantity = document.getElementById("quantity");
+const inputCheckboxTerms = document.getElementById("checkbox1");
 const submitForm = document.querySelector("#modal-form");
 
-// launch modal event
+// launch modal event & close modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+closeBtn.addEventListener("click", closeModal);
 
 // launch modal form
 function launchModal() {
-    modalbg.style.display = "block";
+    modalBg.style.display = "block";
 }
 
 // close modal form
 function closeModal() {
-    modalbg.style.display = "none";
+    modalBg.style.display = "none";
 }
 
-
-// close modal event
-closeBtn.addEventListener("click", closeModal);
-
+// inputs listener
+inputFirst.addEventListener("change", checkName);
+inputLast.addEventListener("change", checkName);
+inputEmail.addEventListener("change", checkEmail);
+inputBirthDate.addEventListener("change", checkBirthDate);
+inputQuantity.addEventListener("change", checkNumberTournamentPlayed);
+inputCheckboxTerms.addEventListener("change", checkedCheckbox);
 
 // submit listener 
 submitForm.addEventListener("submit", validate);
 
 // form validation
-function validate(e) {
-    e.preventDefault();
-    console.log("Submit button clicked");
+function validate(form) {
+    form.preventDefault();
+    if (checkName.call(inputFirst) && checkName.call(inputLast) && checkEmail.call(inputEmail) && checkBirthDate.call(inputBirthDate) && checkNumberTournamentPlayed.call(inputQuantity) && checkedCheckbox.call(inputCheckboxTerms) && checkRadio()) {
+        let formValidated = document.querySelector(".modal-body");
+        formValidated.innerHTML = "<p>Merci pour votre inscription.</p>"
+    }
 }
 
-// verif inputs
-const inputFirst = document.getElementById("first").addEventListener("change", checkInput);;
-const inputLast = document.getElementById("last").addEventListener("change", checkInput);
-const inputEmail = document.getElementById("email").addEventListener("change", checkEmail);
-const inputBirthDate = document.getElementById("birthdate").addEventListener("change", checkBirthDate);
-const inputQuantity = document.getElementById("quantity").addEventListener("change", checkNumberTournamentPlayed);
-const inputCheckboxTerms = document.getElementById("checkbox1").addEventListener("change", checkedCheckbox);
-
-// Checking if input firstname and lastname is valid
-function checkInput() {
-    let value = this.value;
+// we check if input firstname and lastname is valid
+function checkName() {
+    console.log(this);
+    // We check if it's firstname or lastname input
+    let name = this.id === "first" ? "prénom" : "nom";
     // We check if the value is equal or greater than 2 characters & if the value is not null
-    // and we check with regex if there is no numbers [0-9] in the value
-    if (value.length >= 2 && value !== null && !(/\d/.test(value))) {
-        errorManagement(this.id, this.classList);
+    if (this.value.length >= 2 && this.value != null) {
+        // We check with regex if there is no numbers [0-9] in the value
+        if (!(/\d/.test(this.value))) {
+            document.getElementById("infos-"+this.id).textContent = "";
+            this.classList.add("input_validated");
+            this.classList.remove("input_error");
+            return true;
+        }
+        else {
+            display_error(this, "Le "+name+" ne doit pas contenir de chiffres.");
+            return false;
+        }
     }
     else {
-        errorManagement(this.id, this.classList, false);
+        display_error(this, "Veuillez entrer 2 caractères ou plus pour le champ du "+name+".");
+        return false;
     } 
 }
 
-// Checking Email
+// We check if email is valid
 function checkEmail() {
-    email = this.value;
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        errorManagement(this.id, this.classList);
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
+        document.getElementById("infos-"+this.id).textContent = "";
+        this.classList.add("input_validated");
+        this.classList.remove("input_error");
+        return true;
     }
     else {
-        errorManagement(this.id, this.classList, false);
+        display_error(this, "Veuillez entrer une adresse email valide.");
+        return false;
     }
 }
 
-// Checkbox verification
+// We check if terms of use are valid
 function checkedCheckbox() {
-    if (this.checked == true) {
-        errorManagement(this.id, this.classList);
+    if (this.checked === true) {
+        document.getElementById("infos-"+this.id).textContent = "";
+        this.classList.add("input_validated");
+        this.classList.remove("input_error");
+        return true;
     }
     else {
-        errorManagement(this.id, this.classList, false);
+        display_error(this, "Vous devez accepter les conditions d'utilisation.");
+        return false;
     }
 }
 
+// We check if bithdate is valid
 function checkBirthDate() {
     // We transform date in timestamp
     let timestamp = Date.parse(this.value);
     // -2208988800000 = 1 janv 1900
     if (timestamp != NaN && timestamp > -2208988800000 && timestamp < Date.now()) {
-        errorManagement(this.id, this.classList);
+        document.getElementById("infos-"+this.id).textContent = "";
+        this.classList.add("input_validated");
+        this.classList.remove("input_error");
+        return true;
     }
     else {
-        errorManagement(this.id, this.classList, false);
+        display_error(this, "Veuillez entrer une date de naissance valide.");
+        return false;
     }
 }
 
+// We check if the user typed a number between 0 and 99
 function checkNumberTournamentPlayed() {
     let number = Number(this.value)
-    if (Number.isInteger(number) && number >= 0 && number <= 100) {
-        errorManagement(this.id, this.classList);
+    if (Number.isInteger(number) && number >= 0 && number <= 99) {
+        document.getElementById("infos-"+this.id).textContent = "";
+        this.classList.add("input_validated");
+        this.classList.remove("input_error");
+        return true;
     }
     else {
-        errorManagement(this.id, this.classList, false);
+        display_error(this, "Veuillez entrer un nombre valide entre 0 et 100.");
+        return false;
     }
 }
 
-// Handling error messages 
-function errorManagement(id, classlist, isValid = true) {
-    console.log("id = "+id+" / classlist = "+classlist+" / "+isValid)
-
-    let listInputsError = {
-        "first" : "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
-        "last" : "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
-        "email" : "Veuillez entrer une adresse email valide.",
-        "birthdate" : "Veuillez entrer une date de naissance valide.",
-        "quantity" : "Veuillez entrer un nombre valide entre 0 et 100.",
-        "checkbox1" : "Vous devez accepter les conditions d'utilisation."
+// We check if a radio button is checked
+function checkRadio() {
+    let checked = false;
+    let errorlocation = document.getElementById("infos-location");
+    for (let i = 1; i < 7; i++) {
+        if (document.getElementById('location'+i).checked) {
+            checked = true;
+            break;
+        }
     }
-    
-    if (isValid) {
-        document.getElementById("infos-"+id).textContent = "";
-        classlist.add("input_validated");
-        classlist.remove("input_error"); 
+    if (checked) {
+        errorlocation.innerHTML = "";
+        errorlocation.classList.remove("error_msg");
+        errorlocation.style.display = "none";
+        return true;
     }
     else {
-        console.log(listInputsError)
-        classlist.add("input_error");
-        document.getElementById("infos-"+id).classList.add("error_msg");
-        document.getElementById("infos-"+id).textContent = listInputsError[id]
+        errorlocation.classList.add("error_msg");
+        errorlocation.innerHTML = "Vous devez selectionner un lieu.";
+        errorlocation.style.display = "block";
+        return false;
     }
+}
+
+// Displaying error messages
+function display_error(element, errorMessage) {
+    //console.log("id = "+element.id+" / classlist = "+element.classList)
+    
+    element.classList.add("input_error");
+    document.getElementById("infos-"+element.id).style.display = "block";
+    document.getElementById("infos-"+element.id).classList.add("error_msg");
+    document.getElementById("infos-"+element.id).textContent = errorMessage;
+
 }
 

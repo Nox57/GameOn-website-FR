@@ -463,6 +463,7 @@ input[data-error]::after {
   grid-column: span 8;
 }
 .hero-img img {
+  object-fit: cover;
   width: 100%;
   height: 100%;
   display: block;
@@ -545,4 +546,8 @@ footer {
 
 .input_error {
   border: 3px solid #fe142f;
+}
+
+#infos-first, #infos-last, #infos-email, #infos-birthdate, #infos-quantity, #infos-location, #infos-checkbox1 {
+  display: none;
 }
