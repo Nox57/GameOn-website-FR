@@ -550,3 +550,11 @@ footer {
 #infos-first, #infos-last, #infos-email, #infos-birthdate, #infos-quantity, #infos-location, #infos-checkbox1 {
   display: none;
 }
+
+.formValidated {
+  padding: 15px 40px;
+  margin-top: 50%;
+  margin-bottom: 50%;
+  width: 100%;
+  text-align: center;
+}

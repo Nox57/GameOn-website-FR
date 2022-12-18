@@ -51,7 +51,7 @@ function validate(form) {
     form.preventDefault();
     if (checkName.call(inputFirst) && checkName.call(inputLast) && checkEmail.call(inputEmail) && checkBirthDate.call(inputBirthDate) && checkNumberTournamentPlayed.call(inputQuantity) && checkRadio() && checkedCheckbox.call(inputCheckboxTerms)) {
         let formValidated = document.querySelector(".modal-body");
-        formValidated.innerHTML = "<p>Merci pour votre inscription.</p>"
+        formValidated.innerHTML = "<p class='formValidated'>Merci pour votre inscription.</p>"
     }
 }
 
@@ -77,7 +77,7 @@ function checkName() {
     } 
 }
 
-// We check if email is valid
+// We check if email is valid with regex
 function checkEmail() {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.value)) {
         display_valid(this);
