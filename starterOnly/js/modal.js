@@ -51,7 +51,8 @@ function validate(form) {
     form.preventDefault();
     if (checkName.call(inputFirst) && checkName.call(inputLast) && checkEmail.call(inputEmail) && checkBirthDate.call(inputBirthDate) && checkNumberTournamentPlayed.call(inputQuantity) && checkRadio() && checkedCheckbox.call(inputCheckboxTerms)) {
         let formValidated = document.querySelector(".modal-body");
-        formValidated.innerHTML = "<p class='formValidated'>Merci pour votre inscription.</p>"
+        formValidated.innerHTML = "<p class='formValidated'>Merci pour votre inscription.</p>";
+        formValidated.innerHTML += "<p><input class='btn-submit button' type='submit' value='Fermer' onclick='closeModal()'></p>";
     }
     else {
         checkName.call(inputFirst);
