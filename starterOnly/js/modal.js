@@ -53,6 +53,15 @@ function validate(form) {
         let formValidated = document.querySelector(".modal-body");
         formValidated.innerHTML = "<p class='formValidated'>Merci pour votre inscription.</p>"
     }
+    else {
+        checkName.call(inputFirst);
+        checkName.call(inputLast);
+        checkEmail.call(inputEmail);
+        checkBirthDate.call(inputBirthDate);
+        checkNumberTournamentPlayed.call(inputQuantity);
+        checkRadio();
+        checkedCheckbox.call(inputCheckboxTerms);
+    }
 }
 
 // We check if input firstname and lastname are valids
@@ -119,7 +128,7 @@ function checkBirthDate() {
 // We check if the user typed a number between 0 and 99
 function checkNumberTournamentPlayed() {
     let number = Number(this.value)
-    if (Number.isInteger(number) && number >= 0 && number <= 99) {
+    if (this.value !== "" && Number.isInteger(number) && number >= 0 && number <= 99) {
         display_valid(this);
         return true;
     }
