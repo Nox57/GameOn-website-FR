@@ -128,7 +128,7 @@ function checkBirthDate() {
 
 // We check if the user typed a number between 0 and 99
 function checkNumberTournamentPlayed() {
-    let number = Number(this.value)
+    let number = Number(this.value);
     if (this.value !== "" && Number.isInteger(number) && number >= 0 && number <= 99) {
         display_valid(this);
         return true;
